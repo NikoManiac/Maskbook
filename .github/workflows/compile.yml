@@ -48,6 +48,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - name: Run Install
         working-directory: ./packages/provider-proxy
-        run: npm publish dist/
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
