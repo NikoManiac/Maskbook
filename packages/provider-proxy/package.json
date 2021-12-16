@@ -6,7 +6,7 @@
   "types": "./dist/index.d.ts",
   "type": "module",
   "publishConfig": {
-    "NikoManiac:registry": "https://npm.pkg.github.com"
+    "@NikoManiac:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "build": "rollup --config"
