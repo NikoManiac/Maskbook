@@ -23,5 +23,9 @@ jobs:
         with:
           node-version: '16'
           cache: 'pnpm'
-      - run: cd packages/provider-proxy & pnpm install
-      - run: cd packages/provider-proxy & pnpm build
+      - name: Run Install
+        working-directory: ./packages/provider-proxy
+        run: pnpm install
+      - name: Run Build
+        working-directory: ./packages/provider-proxy
+        run: pnpm build
