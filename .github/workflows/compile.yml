@@ -1,17 +1,12 @@
-name: Build
+name: Publish Porxy Package
 
 on:
   push:
-    branches: [master, develop*, released]
-  pull_request:
-    branches: [master, develop*, released]
+    branches: [develop*]
 
 jobs:
   build:
     runs-on: ubuntu-20.04
-    env:
-      WEB3_CONSTANTS_RPC: ${{ secrets.WEB3_CONSTANTS_RPC }}
-      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
     steps:
       - name: Get cache date
         id: get-date
@@ -28,43 +23,5 @@ jobs:
         with:
           node-version: '16'
           cache: 'pnpm'
-      - name: Restore Webpack cache
-        uses: actions/cache@v2
-        with:
-          path: packages/mask/node_modules/.cache/
-          key: ${{ runner.os }}-extension-${{ hashFiles('pnpm-lock.yaml') }}-${{ steps.get-date.outputs.date }}
-          # Not fallback to different dependencies. Webpack seems like have bug.
-          # An example caused by the webpack cache bug: https://github.com/facebook/react/issues/21587
-          restore-keys: ${{ runner.os }}-extension-${{ hashFiles('pnpm-lock.yaml') }}
-      - run: pnpm install
-      - run: npx gulp build-ci
-      - name: Upload `MaskNetwork.base.zip`
-        uses: actions/upload-artifact@v2
-        with:
-          name: MaskNetwork.base.zip
-          path: MaskNetwork.base.zip
-      - name: Upload `MaskNetwork.iOS.zip`
-        uses: actions/upload-artifact@v2
-        with:
-          name: MaskNetwork.iOS.zip
-          path: MaskNetwork.iOS.zip
-      - name: Upload `MaskNetwork.chromium.zip`
-        uses: actions/upload-artifact@v2
-        with:
-          name: MaskNetwork.chromium.zip
-          path: MaskNetwork.chromium.zip
-      - name: Upload `MaskNetwork.chromium-beta.zip`
-        uses: actions/upload-artifact@v2
-        with:
-          name: MaskNetwork.chromium-beta.zip
-          path: MaskNetwork.chromium-beta.zip
-      - name: Upload `MaskNetwork.firefox.zip`
-        uses: actions/upload-artifact@v2
-        with:
-          name: MaskNetwork.firefox.zip
-          path: MaskNetwork.firefox.zip
-      - name: Upload `MaskNetwork.gecko.zip`
-        uses: actions/upload-artifact@v2
-        with:
-          name: MaskNetwork.gecko.zip
-          path: MaskNetwork.gecko.zip
+      - run: cd packages/provider-proxy & pnpm install
+      - run: pnpm build
