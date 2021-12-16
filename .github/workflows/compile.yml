@@ -23,9 +23,23 @@ jobs:
         with:
           node-version: '16'
           cache: 'pnpm'
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: packages/mask/node_modules/.cache/
+          key: ${{ runner.os }}-extension-${{ hashFiles('pnpm-lock.yaml') }}-${{ steps.get-date.outputs.date }}
+          restore-keys: ${{ runner.os }}-extension-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm install
+      - run: npx gulp build-ci
       - name: Run Install
         working-directory: ./packages/provider-proxy
         run: pnpm install
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: packages/provider-proxy/node_modules/.cache/
+          key: ${{ runner.os }}-extension-${{ hashFiles('pnpm-lock.yaml') }}-${{ steps.get-date.outputs.date }}
+         restore-keys: ${{ runner.os }}-extension-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Run Build
         working-directory: ./packages/provider-proxy
         run: pnpm build
