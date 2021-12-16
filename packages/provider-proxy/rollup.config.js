@@ -4,10 +4,6 @@ import json from '@rollup/plugin-json'
 import typescript from 'rollup-plugin-typescript2'
 import { terser } from 'rollup-plugin-terser'
 
-function parseMaybe(s) {
-    return typeof s === 'string' ? JSON.parse(s) : {}
-}
-
 const config = {
     input: './src/index.ts',
     output: {
@@ -36,7 +32,6 @@ const config = {
         }),
         json(),
     ],
-    external: ['@masknet/web3-shared-evm'],
 }
 
 export default config

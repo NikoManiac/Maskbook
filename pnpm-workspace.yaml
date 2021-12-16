@@ -31,4 +31,3 @@ packages:
   - 'packages/external-plugin-previewer'
   - 'packages/backup-format'
   - 'packages/encryption'
-  - 'packages/provider-proxy'

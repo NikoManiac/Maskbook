@@ -30,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-extension-${{ hashFiles('pnpm-lock.yaml') }}-${{ steps.get-date.outputs.date }}
           restore-keys: ${{ runner.os }}-extension-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm install
-      - run: npx gulp build-ci
+      - run: pnpm build
       - name: Run Install
         working-directory: ./packages/provider-proxy
         run: pnpm install
