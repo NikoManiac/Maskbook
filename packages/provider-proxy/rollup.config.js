@@ -1,7 +1,8 @@
-import typescript from 'rollup-plugin-typescript2'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
+import typescript from 'rollup-plugin-typescript2'
+import { terser } from 'rollup-plugin-terser'
 
 function parseMaybe(s) {
     return typeof s === 'string' ? JSON.parse(s) : {}
@@ -14,25 +15,28 @@ const config = {
         format: 'cjs',
     },
     plugins: [
+        terser(),
         nodeResolve({
             preferBuiltins: false,
             mainFields: ['module', 'main'],
+            rootDir: '../..',
             customResolveOptions: {
-                moduleDirectories: [process.env.MODULE_DIR || 'node_modules'],
+                moduleDirectories: ['../../node_modules'],
             },
         }),
         typescript({
             compilerOptions: {
                 declaration: false,
                 declarationMap: false,
-                ...parseMaybe(process.env.TS_OPTS),
+                tsconfig: 'tsconfig.json',
             },
         }),
         commonjs({
-            extensions: ['.js', '.ts', '.tsx'],
+            dynamicRequireTargets: ['!@masknet/shared-base/crypto'],
         }),
         json(),
     ],
+    external: ['@masknet/web3-shared-evm'],
 }
 
 export default config
