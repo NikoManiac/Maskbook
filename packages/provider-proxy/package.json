@@ -1,9 +1,13 @@
 {
   "name": "@masknet/provider-proxy",
+  "version": "0.0.1",
   "private": true,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
+  "publishConfig": {
+    "NikoManiac:registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "build": "rollup --config"
   },
