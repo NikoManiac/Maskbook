@@ -1,5 +1,5 @@
 {
-  "name": "@nikomaniac/provider-proxy",
+  "name": "@nikomaniac/maskbook",
   "version": "0.0.1",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
